@@ -56,24 +56,24 @@ class HomeView(EdcBaseViewMixin, NavbarViewMixin, TemplateView):
     def total_flourish_consents(self):
         """Returns flourish consents.
         """
-        return self.subject_consent_cls.objects.all().count()
+        return self.subject_consent_cls.objects.values_list('subject_identifier').distinct().count()
 
     @property
     def total_child_assents(self):
         child_assent_cls = django_apps.get_model('flourish_child.childassent')
-        return child_assent_cls.objects.count()
+        return child_assent_cls.objects.values_list('subject_identifier').distinct().count()
 
     @property
     def total_child_consents(self):
         child_consent_cls = django_apps.get_model(
             'flourish_caregiver.caregiverchildconsent')
-        return child_consent_cls.objects.count()
+        return child_consent_cls.objects.values_list('subject_identifier').distinct().distinct().count()
 
     @property
     def total_continued_consents(self):
         continued_consent_cls = django_apps.get_model(
             'flourish_child.childcontinuedconsent')
-        return continued_consent_cls.objects.count()
+        return continued_consent_cls.objects.values_list('subject_identifier').distinct().count()
 
     @property
     def total_caregiver_prev_study(self):
@@ -82,12 +82,13 @@ class HomeView(EdcBaseViewMixin, NavbarViewMixin, TemplateView):
         """
         metadataset_screening_identifier = self.maternal_dataset_cls.objects.values_list('screening_identifier',
                                                                                          flat=True).distinct()
-        caregiver_offstudy_subject_identifier = self.caregiver_offstudy_cls.objects.values_list('subject_identifier', flat=True)
+        caregiver_offstudy_subject_identifier = self.caregiver_offstudy_cls.objects.values_list(
+            'subject_identifier', flat=True)
 
         subject_consents = self.subject_consent_cls.objects.filter(
             Q(screening_identifier__in=metadataset_screening_identifier) & ~Q(
                 subject_identifier__in=caregiver_offstudy_subject_identifier)).values_list(
-            'subject_identifier').distinct().count()
+            'subject_identifier', flat=True).distinct().count()
         return subject_consents
 
     @property
@@ -96,7 +97,7 @@ class HomeView(EdcBaseViewMixin, NavbarViewMixin, TemplateView):
         Children from previous BHP studies Currently on-Study
         """
         child_offstudy_subject_identifiers = self.child_offstudy_cls.objects.values_list('subject_identifier',
-                                                                                         flat=True)
+                                                                                         flat=True).distinct()
         total_children = self.caregiver_child_consent_cls.objects.filter(Q(study_child_identifier__isnull=False) & ~Q(
             subject_identifier__in=child_offstudy_subject_identifiers)).count()
         return total_children
@@ -106,7 +107,7 @@ class HomeView(EdcBaseViewMixin, NavbarViewMixin, TemplateView):
         """
         All women who consented when pregnant (on and off study)
         """
-        return self.antenatal_enrollment_cls.objects.count()
+        return self.antenatal_enrollment_cls.objects.values_list('subject_identifier').distinct().count()
 
     @property
     def total_consented_pregnant_women(self):
@@ -115,9 +116,9 @@ class HomeView(EdcBaseViewMixin, NavbarViewMixin, TemplateView):
         """
 
         maternal_offstudy_subject_identifiers = self.caregiver_offstudy_cls.objects.values_list('subject_identifier',
-                                                                                      flat=True).distinct()
+                                                                                                flat=True).distinct()
         all_consented_women = self.antenatal_enrollment_cls.objects.exclude(
-            subject_identifier__in=maternal_offstudy_subject_identifiers).count()
+            subject_identifier__in=maternal_offstudy_subject_identifiers).values_list('subject_identifier', flat=True).distinct().count()
         return all_consented_women
 
     @property
@@ -127,14 +128,15 @@ class HomeView(EdcBaseViewMixin, NavbarViewMixin, TemplateView):
         """
 
         maternal_offstudy_subject_identifiers = self.caregiver_offstudy_cls.objects.values_list('subject_identifier',
-                                                                                      flat=True).distinct()
+                                                                                                flat=True).distinct()
 
         maternal_delivery_subject_identifiers = self.maternal_delivery_cls.objects.values_list('subject_identifier',
                                                                                                flat=True).distinct()
 
         currently_preg = self.antenatal_enrollment_cls.objects.exclude(
             Q(subject_identifier__in=maternal_offstudy_subject_identifiers) |
-            Q(subject_identifier__in=maternal_delivery_subject_identifiers)).count()
+            Q(subject_identifier__in=maternal_delivery_subject_identifiers)).values_list('subject_identifier',
+                                                                                         flat=True).distinct().count()
 
         return currently_preg
 
@@ -144,7 +146,8 @@ class HomeView(EdcBaseViewMixin, NavbarViewMixin, TemplateView):
         Newly recruited (not from previous BHP studies) women enrolled in pregnancy who gave birth who are currently On-Study
         """
 
-        return self.maternal_delivery_cls.objects.count()
+        return self.maternal_delivery_cls.objects.values_list('subject_identifier',
+                                                              flat=True).distinct().count()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
