@@ -44,13 +44,56 @@ from .views import HomeView, AdministrationView
 
 app_name = 'flourish_follow'
 
+"""flourish URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/3.1/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import path, include
+from django.views.generic.base import RedirectView
+from edc_action_item.admin_site import edc_action_item_admin
+from edc_appointment.admin_site import edc_appointment_admin
+from edc_identifier.admin_site import edc_identifier_admin
+from edc_lab.admin_site import edc_lab_admin
+from edc_locator.admin_site import edc_locator_admin
+from edc_metadata.admin_site import edc_metadata_admin
+from edc_reference.admin_site import edc_reference_admin
+from edc_registration.admin_site import edc_registration_admin
+from flourish_caregiver.admin_site import flourish_caregiver_admin
+from flourish_reports.admin_site import flourish_reports_admin
+from edc_visit_schedule.admin_site import edc_visit_schedule_admin
+from edc_call_manager.admin_site import edc_call_manager_admin
+from edc_data_manager.admin_site import edc_data_manager_admin
+from edc_odk.admin_site import edc_odk_admin
+
+from flourish_child.admin_site import flourish_child_admin
+from pre_flourish.admin_site import pre_flourish_admin
+from flourish_follow.admin_site import flourish_follow_admin
+from flourish_prn.admin_site import flourish_prn_admin
+from flourish_export.admin_site import flourish_export_admin
+from .views import HomeView, AdministrationView
+
+app_name = 'flourish_follow'
+
 urlpatterns = [
     path('accounts/', include('edc_base.auth.urls')),
     path('admin/', include('edc_base.auth.urls')),
 
     path('admin/', admin.site.urls),
     path('admin/', edc_appointment_admin.urls),
-    path('admin/', edc_calendar_admin.urls),
     path('admin/', edc_lab_admin.urls),
     path('admin/', edc_data_manager_admin.urls),
     path('admin/', edc_locator_admin.urls),
@@ -84,7 +127,6 @@ urlpatterns = [
     path('edc_appointment/', include('edc_appointment.urls')),
     path('edc_action_item/', include('edc_action_item.urls')),
     path('edc_base/', include('edc_base.urls')),
-    path('edc_calendar/', include('edc_calendar.urls')),
     path('edc_consent/', include('edc_consent.urls')),
     path('edc_data_manager/', include('edc_data_manager.urls')),
     path('edc_call_manager/', include('edc_call_manager.urls')),
@@ -94,16 +136,11 @@ urlpatterns = [
     path('edc_reference/', include('edc_reference.urls')),
     path('edc_subject_dashboard/', include('edc_subject_dashboard.urls')),
     path('edc_visit_schedule/', include('edc_visit_schedule.urls')),
-
-    path('eventcalendar/', include('eventcalendar.urls')),
-    path('', include("calendarapp.urls")),
-
     path('subject/', include('flourish_dashboard.urls')),
-
     path('home/', HomeView.as_view(), name='home_url'),
     path('', HomeView.as_view(), name='home_url'),
     path('calendar/', include('flourish_calendar.urls')),
-
+    path('lab/', include('edc_lab.urls'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
