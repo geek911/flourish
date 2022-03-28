@@ -40,8 +40,6 @@ LOGIN_REDIRECT_URL = 'home_url'
 
 INDEX_PAGE = 'flourish.bhp.org.bw'
 
-# AUTO_CREATE_KEYS = True
-
 ETC_DIR = os.path.join('/etc/', APP_NAME)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -59,6 +57,7 @@ config = configparser.ConfigParser()
 config.read(CONFIG_PATH)
 
 # Application definition
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -73,6 +72,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'multiselectfield',
     'edc_action_item.apps.AppConfig',
+    'edc_calendar.apps.AppConfig',
     'edc_consent.apps.AppConfig',
     'edc_dashboard.apps.AppConfig',
     'edc_device.apps.AppConfig',
@@ -87,7 +87,11 @@ INSTALLED_APPS = [
     'edc_visit_schedule.apps.AppConfig',
     'edc_call_manager.apps.AppConfig',
     'edc_metadata_rules.apps.AppConfig',
+
+    # 'eventcalendar.apps.AppConfig',
+    # "calendarapp.apps.CalendarappConfig",
     # "accounts.apps.AccountsConfig",
+
     'flourish_export.apps.AppConfig',
     'flourish_dashboard.apps.AppConfig',
     'flourish_prn.apps.AppConfig',
@@ -110,11 +114,8 @@ INSTALLED_APPS = [
     'flourish.apps.EdcVisitTrackingAppConfig',
     'flourish.apps.EdcTimepointAppConfig',
     'pre_flourish.apps.AppConfig',
-    'flourish_calendar.apps.AppConfig',
     'flourish.apps.AppConfig',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'edc_document_archieve.apps.AppConfig',
+    'flourish_calendar.apps.AppConfig',
 ]
 
 MIDDLEWARE = [
@@ -153,7 +154,7 @@ WSGI_APPLICATION = 'flourish.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 mysql_config = configparser.ConfigParser()
-mysql_config.read(os.path.join(ETC_DIR, 'mysql.ini'))
+mysql_config.read(os.path.join(ETC_DIR, 'mysql.conf'))
 
 HOST = mysql_config['mysql']['host']
 DB_USER = mysql_config['mysql']['user']
@@ -173,10 +174,10 @@ DATABASES = {
 }
 
 # DATABASES = {
-    # 'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
+# 'default': {
+# 'ENGINE': 'django.db.backends.sqlite3',
+# 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+# }
 # }
 
 ODK_SERVER_TYPE = 'central'
@@ -283,7 +284,7 @@ DASHBOARD_BASE_TEMPLATES = {
     'child_screening_listboard_template': 'flourish_dashboard/child_subject/screening_listboard.html',
     'odk_listboard_template': 'edc_odk/odk_forms/listboard.html',
     'export_listboard_template': 'flourish_export/listboard.html',
-    }
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -297,3 +298,8 @@ COUNTRY = 'botswana'
 
 PARENT_REFERENCE_MODEL1 = ''
 PARENT_REFERENCE_MODEL2 = ''
+
+# Date and time format
+SHORT_DATE_FORMAT = 'Y-m-d'
+SHORT_DATETIME_FORMAT = 'Y-m-d h:m'
+DATE_FORMAT = 'Y-m-d'
