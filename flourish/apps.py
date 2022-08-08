@@ -144,24 +144,27 @@ class EdcOdkAppConfig(BaseEdcOdkAppConfig):
 
 
 class EdcSenaiteInterfaceAppConfig(BaseEdcSenaiteInterfaceAppConfig):
-    host = "https://lims-test.bhp.org.bw"
-    client = "Flourish"
+    host = "https://bhplims.bhp.org.bw"
+    client = "TESTING"
     courier = ""
     sample_type_match = {'viral_load': 'Whole Blood EDTA',
                          'cd4': 'Whole Blood EDTA',
                          'hematology': 'Whole Blood EDTA',
                          'complete_blood_count': 'Whole Blood EDTA',
+                         'infant_pl_cytokines': 'Whole Blood EDTA',
                          'dna_pcr': 'Dry Blood Spot',
                          'stool_sample': 'Stool'}
     container_type_match = {'viral_load': 'EDTA tube',
                             'cd4': 'EDTA tube',
                             'hematology': 'EDTA tube',
                             'complete_blood_count': 'EDTA Tube',
+                            'infant_pl_cytokines': 'EDTA Tube',
                             'dna_pcr': 'Filter paper',
                             'stool_sample': 'Cryogenic Vial'}
     template_match = {'viral_load': 'HIV RNA PCR',
                       'cd4': 'CD4/CD8',
                       'hematology': 'CBC',
                       'complete_blood_count': 'CBC',
+                      'infant_pl_cytokines': 'Plasma for Cytokines',
                       'dna_pcr': 'HIV DNA PCR',
                       'stool_sample': 'Stool Storage'}
