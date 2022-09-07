@@ -145,7 +145,7 @@ class EdcOdkAppConfig(BaseEdcOdkAppConfig):
 
 class EdcSenaiteInterfaceAppConfig(BaseEdcSenaiteInterfaceAppConfig):
     host = "https://bhplims.bhp.org.bw"
-    client = "TESTING"
+    client = "Flourish"
     courier = ""
     sample_type_match = {'viral_load': 'Whole Blood EDTA',
                          'cd4': 'Whole Blood EDTA',
