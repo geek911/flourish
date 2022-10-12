@@ -49,7 +49,7 @@ DEBUG = True
 # KEY_PATH = os.path.join(BASE_DIR, 'crypto_fields')
 # KEY_PATH = os.path.join(ETC_DIR, 'crypto_fields')
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'flourish.bhp.org.bw', '10.113.201.239', '192.168.8.102']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'flourish.bhp.org.bw', '10.113.201.212', '192.168.8.102']
 
 CONFIG_FILE = f'{APP_NAME}.ini'
 
@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     'edc_visit_schedule.apps.AppConfig',
     'edc_call_manager.apps.AppConfig',
     'edc_metadata_rules.apps.AppConfig',
+    'edc_document_archieve.apps.AppConfig',
     # "accounts.apps.AccountsConfig",
     'flourish_export.apps.AppConfig',
     'flourish_dashboard.apps.AppConfig',
@@ -116,6 +117,7 @@ INSTALLED_APPS = [
     'flourish.apps.AppConfig',
     'rest_framework',
     'rest_framework.authtoken',
+    'debug_toolbar'
 ]
 
 MIDDLEWARE = [
@@ -129,7 +131,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'edc_dashboard.middleware.DashboardMiddleware',
     'edc_subject_dashboard.middleware.DashboardMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+
     
+]
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
 ]
 
 ROOT_URLCONF = 'flourish.urls'

@@ -32,7 +32,7 @@ from edc_visit_schedule.admin_site import edc_visit_schedule_admin
 from edc_call_manager.admin_site import edc_call_manager_admin
 from edc_data_manager.admin_site import edc_data_manager_admin
 from edc_odk.admin_site import edc_odk_admin
-
+import debug_toolbar
 from flourish_calendar.admin_site import flourish_calendar_admin
 from flourish_child.admin_site import flourish_child_admin
 from pre_flourish.admin_site import pre_flourish_admin
@@ -100,6 +100,7 @@ urlpatterns = [
     path('edc_da_api/', include('edc_document_archieve.urls')),
     path('calendar/', include('flourish_calendar.urls')),
     path("admin/", flourish_calendar_admin.urls),
+    path('__debug__/', include(debug_toolbar.urls)),
 
 ]
 
