@@ -1,23 +1,24 @@
 from datetime import datetime
+
 from dateutil.relativedelta import MO, TU, WE, TH, FR, SA, SU
 from dateutil.tz import gettz
 from django.apps import AppConfig as DjangoAppConfig
-
-from edc_appointment.apps import AppConfig as BaseEdcAppointmentAppConfig
-from edc_appointment.appointment_config import AppointmentConfig
-from edc_appointment.constants import COMPLETE_APPT
 from edc_base.apps import AppConfig as BaseEdcBaseAppConfig
 from edc_constants.constants import FAILED_ELIGIBILITY
 from edc_data_manager.apps import AppConfig as BaseEdcDataManagerAppConfig
 from edc_facility.apps import AppConfig as BaseEdcFacilityAppConfig
 from edc_locator.apps import AppConfig as BaseEdcLocatorAppConfig
-from edc_protocol.apps import AppConfig as BaseEdcProtocolAppConfig
 from edc_metadata.apps import AppConfig as BaseEdcMetadataAppConfig
-from edc_odk.apps import AppConfig as BaseEdcOdkAppConfig
-from edc_senaite_interface.apps import AppConfig as BaseEdcSenaiteInterfaceAppConfig
+from edc_protocol.apps import AppConfig as BaseEdcProtocolAppConfig
 from edc_timepoint.apps import AppConfig as BaseEdcTimepointAppConfig
 from edc_timepoint.timepoint import Timepoint
 from edc_timepoint.timepoint_collection import TimepointCollection
+
+from edc_appointment.appointment_config import AppointmentConfig
+from edc_appointment.apps import AppConfig as BaseEdcAppointmentAppConfig
+from edc_appointment.constants import COMPLETE_APPT
+from edc_odk.apps import AppConfig as BaseEdcOdkAppConfig
+from edc_senaite_interface.apps import AppConfig as BaseEdcSenaiteInterfaceAppConfig
 from edc_visit_tracking.apps import AppConfig as BaseEdcVisitTrackingAppConfig
 from edc_visit_tracking.constants import SCHEDULED, UNSCHEDULED, LOST_VISIT, \
     COMPLETED_PROTOCOL_VISIT, MISSED_VISIT
@@ -153,18 +154,33 @@ class EdcSenaiteInterfaceAppConfig(BaseEdcSenaiteInterfaceAppConfig):
                          'complete_blood_count': 'Whole Blood EDTA',
                          'infant_pl_cytokines': 'Whole Blood EDTA',
                          'dna_pcr': 'Dry Blood Spot',
-                         'stool_sample': 'Stool'}
+                         'stool_sample': 'Stool',
+                         'chemistry': 'Whole Blood Red Top (NON)',
+                         'fasting_glucose': 'Whole Blood Grey Top',
+                         'fasting_insulin': 'Whole Blood Red Top (NON)',
+                         'lead_level': 'Whole Blood EDTA',
+                         'fbc': 'Whole Blood EDTA'}
     container_type_match = {'viral_load': 'EDTA tube',
                             'cd4': 'EDTA tube',
                             'hematology': 'EDTA tube',
                             'complete_blood_count': 'EDTA Tube',
                             'infant_pl_cytokines': 'EDTA Tube',
                             'dna_pcr': 'Filter paper',
-                            'stool_sample': 'Cryogenic Vial'}
+                            'stool_sample': 'Cryogenic Vial',
+                            'chemistry': 'NON/Red top tube',
+                            'fasting_glucose': 'Sodium Flouride/Pottasium Oxalate',
+                            'fasting_insulin': 'NON/Red top tube',
+                            'lead_level': 'EDTA tube',
+                            'fbc': 'EDTA tube'}
     template_match = {'viral_load': 'HIV RNA PCR',
                       'cd4': 'CD4/CD8',
                       'hematology': 'CBC',
                       'complete_blood_count': 'CBC',
                       'infant_pl_cytokines': 'Plasma for Cytokines',
                       'dna_pcr': 'HIV DNA PCR',
-                      'stool_sample': 'Stool Storage'}
+                      'stool_sample': 'Stool Storage',
+                      'chemistry': 'Lipids + LFTs',
+                      'fasting_glucose': 'Fasting glucose',
+                      'fasting_insulin': 'Insulin',
+                      'lead_level': 'Lead & Storage plasma',
+                      'fbc': 'CBC'}
