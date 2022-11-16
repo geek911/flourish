@@ -117,7 +117,7 @@ INSTALLED_APPS = [
     'flourish.apps.AppConfig',
     'rest_framework',
     'rest_framework.authtoken',
-    'debug_toolbar'
+    'cacheops',
 ]
 
 MIDDLEWARE = [
@@ -332,3 +332,15 @@ PARENT_REFERENCE_MODEL2 = ''
 SHORT_DATE_FORMAT = 'Y-m-d'
 SHORT_DATETIME_FORMAT = 'Y-m-d h:m'
 DATE_FORMAT = 'Y-m-d'
+
+CACHEOPS_REDIS = "redis://localhost:6379/1"
+
+
+CACHEOPS = {
+    'flourish_caregiver.*': {'ops': 'all', 'timeout': 60*60*24},
+    'flourish_child.*': {'ops': 'all', 'timeout': 60*60*24},
+    'flourish_prn.*': {'ops': 'all', 'timeout': 60*60*24},
+    'flourish_follow.*': {'ops': 'all', 'timeout': 60*60*24},
+    'flourish_calendar.*': {'ops': 'all', 'timeout': 60*60*24},
+    '*.*': {'timeout': 60*60},
+}

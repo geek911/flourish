@@ -65,3 +65,4 @@ xlwt
 djangorestframework
 matplotlib
 flexitext
+django-cacheops
